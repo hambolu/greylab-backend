@@ -25,41 +25,28 @@ const oneDay = 1000 * 60 * 60 * 24;
         optionSuccessStatus: 200,
       })
       );
-const authController = require('../controllers/authController');
-const userControllers = require('../controllers/userController');
-const whitelistProjectController = require('../controllers/whitelistProjectsController');
-const authJwt = require('../middleware/authJwt');
-
-module.exports = function(app) {
-  
-  // // Twitter authentication routes
-  // app.get('/auth/twitter', twitterController.authenticateTwitter);
-  // app.get('/auth/twitter/callback', twitterController.twitterCallback);
-  
-  // // Discord authentication routes
-  // app.get('/auth/discord', discordController.authenticateDiscord);
-  // app.get('/auth/discord/callback', discordController.discordCallback);
-  
-  // // Wallet connection route
-  // app.get('/connect-wallet', venomController.connectWallet);
-  
-  // Authentication
-  app.post('/auth/login', authController.login);
-  app.post('/auth/signup', authController.signup);
-// Project Route
-app.post("/createproject", [authJwt.verifyToken], whitelistProjectController.project);
-app.get("/allProject", [authJwt.verifyToken], whitelistProjectController.allProjects);
-
-
-// users route
-app.post("/update-profile", [authJwt.verifyToken], userControllers.updateProfile)
-  app.post("/update-profile-image", [authJwt.verifyToken], userControllers.updateProfileImage)
-  //app.post("/uploadCv", _userprofile.single('file'), [authJwt.verifyToken], userControllers.uploadCv)
-  app.get("/get-all-users", [authJwt.verifyToken],  userControllers.allUsers);
-  app.get("/getUserByRoleName/:roleName",  userControllers.getOneUser);
-  app.get("/getUser/:Id", [authJwt.verifyToken], userControllers.getSingleUser);
-  app.delete("/delete-user/:id", [authJwt.verifyToken], userControllers.delete)
-  //roles
-  app.get("/api/get-roles", [authJwt.verifyToken], userControllers.allRoles);
-
-}
+      const authController = require('../controllers/authController');
+      const userControllers = require('../controllers/userController');
+      const whitelistProjectController = require('../controllers/whitelistProjectsController');
+      const authJwt = require('../middleware/authJwt');
+      
+      module.exports = function (app) {
+        // Authentication
+        app.post('/auth/login', authController.login);
+        app.post('/auth/signup', authController.signup);
+      
+        // Project Route
+        app.post('/createproject', [authJwt.verifyToken], whitelistProjectController.project);
+        app.get('/allProject', [authJwt.verifyToken], whitelistProjectController.allProjects);
+      
+        // Users route
+        app.post('/update-profile', [authJwt.verifyToken], userControllers.updateProfile);
+        app.post('/update-profile-image', [authJwt.verifyToken], userControllers.updateProfileImage);
+        app.get('/get-all-users', [authJwt.verifyToken], userControllers.allUsers);
+        app.get('/getUserByRoleName/:roleName', userControllers.getOneUser);
+        app.get('/getUser/:Id', [authJwt.verifyToken], userControllers.getSingleUser);
+        app.delete('/delete-user/:id', [authJwt.verifyToken], userControllers.delete);
+      
+        // Roles
+        app.get('/api/get-roles', [authJwt.verifyToken], userControllers.allRoles);
+      };      

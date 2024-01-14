@@ -44,7 +44,7 @@ async function connectToMongo() {
 
   // Import routes after connection is established
   const mainRoutes = require('./routes/main.routes');
-  app.use('/', mainRoutes);
+  mainRoutes(app);
 
   // Root route handler
   app.get('/', (req, res) => {
