@@ -38,18 +38,11 @@ async function connectToMongo() {
   }
 }
 
+
 // Wrap the connection in an async IIFE to use await
 (async () => {
   await connectToMongo();
 
-  // Import routes after connection is established
-  const mainRoutes = require('./routes/main.routes');
-  mainRoutes(app);
-
-  // Root route handler
-  app.get('/', (req, res) => {
-    res.json({ message: 'Welcome to GreyLabs.' });
-  });
 
   // Initialize database and roles after connection
   await initial(); // Call initial() after connection is successful
@@ -59,6 +52,14 @@ async function connectToMongo() {
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
   });
+
+  const mainRoutes = require('./routes/main.routes');
+mainRoutes(app);
+
+// Root route handler
+app.get('/', (req, res) => {
+  res.json({ message: 'Welcome to GreyLabs.' });
+});
 })();
 
 // Define initial() function
