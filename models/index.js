@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+require('dotenv').config()
 // No need for Promise configuration anymore
 
 const db = {};
