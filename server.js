@@ -53,13 +53,38 @@ async function connectToMongo() {
     console.log(`Server is running on port ${PORT}.`);
   });
 
-  const mainRoutes = require('./routes/main.routes');
-mainRoutes(app);
+//   const mainRoutes = require('./routes/main.routes');
+// mainRoutes(app);
 
 // Root route handler
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to GreyLabs.' });
 });
+
+
+const authController = require('../controllers/authController');
+      const userControllers = require('../controllers/userController');
+      const whitelistProjectController = require('../controllers/whitelistProjectsController');
+      const authJwt = require('../middleware/authJwt');
+
+
+      app.post('/auth/login', authController.login);
+        app.post('/auth/signup', authController.signup);
+      
+        // Project Route
+        app.post('/createproject', [authJwt.verifyToken], whitelistProjectController.project);
+        app.get('/allProject', [authJwt.verifyToken], whitelistProjectController.allProjects);
+      
+        // Users route
+        app.post('/update-profile', [authJwt.verifyToken], userControllers.updateProfile);
+        app.post('/update-profile-image', [authJwt.verifyToken], userControllers.updateProfileImage);
+        app.get('/get-all-users', [authJwt.verifyToken], userControllers.allUsers);
+        app.get('/getUserByRoleName/:roleName', userControllers.getOneUser);
+        app.get('/getUser/:Id', [authJwt.verifyToken], userControllers.getSingleUser);
+        app.delete('/delete-user/:id', [authJwt.verifyToken], userControllers.delete);
+      
+        // Roles
+        app.get('/api/get-roles', [authJwt.verifyToken], userControllers.allRoles);
 })();
 
 // Define initial() function
