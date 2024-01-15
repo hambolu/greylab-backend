@@ -1,5 +1,4 @@
-const securifyToken = require('securifytoken');  // Use your actual package name
-
+const encode = require('securifyToken');
 const crypto = require('crypto');
 const User = require('../models/user.model');
 const config = require('../config/config');
@@ -37,7 +36,7 @@ exports.signup = async (req, res) => {
 
     await newUser.save();
 
-    const token = securifyToken.encode({ id: newUser.id }, process.env.SECRET_KEY, {
+    const token = encode({ id: newUser.id }, process.env.SECRET_KEY, {
       expiresIn: 86400, // 24 hours
     });
 
