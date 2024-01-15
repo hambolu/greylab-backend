@@ -61,7 +61,7 @@ exports.login = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const token = securifyToken.encode({ id: user.id }, process.env.SECRET_KEY, {
+    const token = encode({ id: user.id }, process.env.SECRET_KEY, {
       expiresIn: 86400, // 24 hours
     });
 
