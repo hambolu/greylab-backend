@@ -62,10 +62,10 @@ app.get('/', (req, res) => {
 });
 
 
-const authController = require('../controllers/authController');
-      const userControllers = require('../controllers/userController');
-      const whitelistProjectController = require('../controllers/whitelistProjectsController');
-      const authJwt = require('../middleware/authJwt');
+const authController = require('./controllers/authController');
+      const userControllers = require('./controllers/userController');
+      const whitelistProjectController = require('./controllers/whitelistProjectsController');
+      const authJwt = require('./middleware/authJwt');
 
 
       app.post('/auth/login', authController.login);
