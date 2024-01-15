@@ -38,6 +38,29 @@ async function connectToMongo() {
   }
 }
 
+app.get('/', (req, res) => {
+  res.json({ message: 'Welcome to GreyLabs.' });
+});
+
+const authController = require('./controllers/authController');
+const userControllers = require('./controllers/userController');
+const whitelistProjectController = require('./controllers/whitelistProjectsController');
+const authJwt = require('./middleware/authJwt');
+
+app.post('/auth/login', authController.login);
+app.post('/auth/signup', authController.signup);
+
+// Project Route
+app.post('/createproject', [authJwt.verifyToken], whitelistProjectController.project);
+app.get('/allProject', [authJwt.verifyToken], whitelistProjectController.allProjects);
+
+// Users route
+app.post('/update-profile', [authJwt.verifyToken], userControllers.updateProfile);
+app.post('/update-profile-image', [authJwt.verifyToken], userControllers.updateProfileImage);
+app.get('/get-all-users', [authJwt.verifyToken], userControllers.allUsers);
+app.get('/getUserByRoleName/:roleName', userControllers.getOneUser);
+app.get('/getUser/:Id', [authJwt.verifyToken], userControllers.getSingleUser);
+app.delete('/delete-user/:id', [authJwt.verifyToken], userControllers.delete);
 
 // Wrap the connection in an async IIFE to use await
 (async () => {
@@ -59,28 +82,7 @@ async function connectToMongo() {
 // Root route handler
 
 })();
-app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to GreyLabs.' });
-});
-const authController = require('./controllers/authController');
-const userControllers = require('./controllers/userController');
-const whitelistProjectController = require('./controllers/whitelistProjectsController');
-const authJwt = require('./middleware/authJwt');
 
-app.post('/auth/login', authController.login);
-app.post('/auth/signup', authController.signup);
-
-// Project Route
-app.post('/createproject', [authJwt.verifyToken], whitelistProjectController.project);
-app.get('/allProject', [authJwt.verifyToken], whitelistProjectController.allProjects);
-
-// Users route
-app.post('/update-profile', [authJwt.verifyToken], userControllers.updateProfile);
-app.post('/update-profile-image', [authJwt.verifyToken], userControllers.updateProfileImage);
-app.get('/get-all-users', [authJwt.verifyToken], userControllers.allUsers);
-app.get('/getUserByRoleName/:roleName', userControllers.getOneUser);
-app.get('/getUser/:Id', [authJwt.verifyToken], userControllers.getSingleUser);
-app.delete('/delete-user/:id', [authJwt.verifyToken], userControllers.delete);
 
 // Define initial() function
 async function initial() {
