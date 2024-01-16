@@ -1,4 +1,4 @@
-const {encode} = require('../middleware/securifyToken');
+const { encode } = require('../middleware/securifyToken');
 const crypto = require('crypto');
 const User = require('../models/user.model');
 const config = require('../config/config');

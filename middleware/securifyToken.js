@@ -117,4 +117,4 @@ function generateUniqueString() {
 }
 
 // Export the functions for external use
-export default { encode, decode, verify };
+module.exports = { encode, decode, verify };
