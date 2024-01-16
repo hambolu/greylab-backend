@@ -1,4 +1,4 @@
-const { decode, verify } = require('./securifyToken').default;
+const { decode, verify } = require('./securifyToken');
 const { User, Role } = require('../models');
 
 const authenticateToken = async (req, res, next) => {
