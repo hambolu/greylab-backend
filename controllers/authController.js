@@ -47,7 +47,7 @@ exports.signup = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Internal Server Error', error });
+    return res.status(500).json({ message: 'Internal Server Error', error:error.message });
   }
 };
 
@@ -74,7 +74,7 @@ exports.login = async (req, res) => {
     console.error(error);
     res.status(500).json({
       message: 'Internal Server Error',
-      error,
+      error:error.message,
     });
   }
 };

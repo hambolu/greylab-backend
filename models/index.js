@@ -4,14 +4,19 @@ require('dotenv').config()
 
 const db = {};
 
-// Connect to MongoDB database
-// mongoose.connect(process.env.DB_CONNECTION)
-//   .then(() => {
-//     console.log('Connected to MongoDB');
-//   })
-//   .catch((error) => {
-//     console.error('Error connecting to MongoDB:', error);
-//   });
+//Connect to MongoDB database
+mongoose.connect(process.env.DB_CONNECTION, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    ssl: true,
+    tls: true,
+  })
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error);
+  });
 
 // Import models directly and assign to db object
 db.User = require('./user.model');
