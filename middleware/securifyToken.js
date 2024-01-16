@@ -15,7 +15,7 @@ function encode(payload, secretKey, options = {}) {
   
   //check if secretKey is equal 32 bytes
   if (secretKey.length !== 32) {
-    throw new Error('Invalid key length. The key must be 32 bytes (256 bits).',secretKey);
+    throw new Error(`Invalid key length. The key must be 32 bytes (256 bits).${secretKey}`);
   }
   // Generate a random initialization vector
   const iv = randomBytes(16);
