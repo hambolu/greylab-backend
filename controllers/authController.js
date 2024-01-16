@@ -1,5 +1,5 @@
 const { encode } = require('../middleware/securifyToken');
-const crypto = require('crypto');
+const { scrypt,randomBytes, randomFill, createCipheriv }  = require('node:crypto');
 const User = require('../models/user.model');
 const config = require('../config/config');
 
@@ -52,6 +52,8 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
+  const secretKey = randomBytes(32).toString('hex');
+  console.log(secretKey);
   try {
     const user = await User.findOne({
       venomAddress: req.body.venomAddress,

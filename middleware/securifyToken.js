@@ -12,6 +12,11 @@ const algorithm = 'aes-256-ctr';
  * @returns {string} - The generated token.
  */
 function encode(payload, secretKey, options = {}) {
+  
+  //check if secretKey is equal 32 bytes
+  if (secretKey.length !== 32) {
+    throw new Error('Invalid key length. The key must be 32 bytes (256 bits).');
+  }
   // Generate a random initialization vector
   const iv = randomBytes(16);
 
