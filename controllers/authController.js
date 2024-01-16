@@ -77,6 +77,7 @@ exports.login = async (req, res) => {
     res.status(500).json({
       message: 'Internal Server Error',
       error:error.message,
+      key:process.env.SECRET_KEY
     });
   }
 };
