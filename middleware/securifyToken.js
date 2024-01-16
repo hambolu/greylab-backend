@@ -22,7 +22,7 @@ function encode(payload, secretKey, options = {}) {
   const encryptedPayload = Buffer.concat([cipher.update(JSON.stringify(payload)), cipher.final()]);
 
   // Combine the unique string, IV, and encrypted payload to form the token
-  const token = `${generateUniqueString()}|${iv.toString('hex')}${encryptedPayload.toString('hex')}`;
+  let token = `${generateUniqueString()}|${iv.toString('hex')}${encryptedPayload.toString('hex')}`;
 
   // Check if expiresIn option is provided
   if (options.expiresIn) {
