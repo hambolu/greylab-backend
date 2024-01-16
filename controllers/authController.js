@@ -52,8 +52,8 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const secretKey = randomBytes(32).toString('hex');
-  console.log(secretKey);
+  // const secretKey = randomBytes(32).toString('hex');
+  // console.log(secretKey);
   try {
     const user = await User.findOne({
       venomAddress: req.body.venomAddress,
@@ -77,7 +77,6 @@ exports.login = async (req, res) => {
     res.status(500).json({
       message: 'Internal Server Error',
       error:error.message,
-      secretKey
     });
   }
 };
