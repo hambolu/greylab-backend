@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+import { scrypt,randomBytes, randomFill, createCipheriv } from 'node:crypto';
 
 // Define the encryption algorithm
 const algorithm = 'aes-256-ctr';
@@ -13,10 +13,10 @@ const algorithm = 'aes-256-ctr';
  */
 function encode(payload, secretKey, options = {}) {
   // Generate a random initialization vector
-  const iv = crypto.randomBytes(16);
+  const iv = randomBytes(16);
 
   // Create a cipher using the encryption algorithm and secret key
-  const cipher = crypto.createCipheriv(algorithm, Buffer.from(secretKey), iv);
+  const cipher = createCipheriv(algorithm, Buffer.from(secretKey), iv);
 
   // Encrypt the payload
   const encryptedPayload = Buffer.concat([cipher.update(JSON.stringify(payload)), cipher.final()]);
@@ -72,7 +72,7 @@ function decode(token, secretKey) {
   const encryptedPayload = Buffer.from(rest.slice(32), 'hex');
 
   // Create a decipher using the encryption algorithm and secret key
-  const decipher = crypto.createDecipheriv(algorithm, Buffer.from(secretKey), iv);
+  const decipher = createDecipheriv(algorithm, Buffer.from(secretKey), iv);
 
   // Decrypt the payload
   const decryptedPayload = Buffer.concat([decipher.update(encryptedPayload), decipher.final()]);
@@ -117,4 +117,4 @@ function generateUniqueString() {
 }
 
 // Export the functions for external use
-module.exports = { encode, decode, verify };
+export default { encode, decode, verify };
