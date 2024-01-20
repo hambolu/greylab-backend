@@ -13,8 +13,8 @@ const algorithm = 'aes-256-ctr';
  */
 function encode(payload, secretKey, options = {}) {
   //check if secretKey is equal 32 bytes
-  if (!Buffer.isBuffer(secretKey) || secretKey.length !== 32) {
-    throw new Error('Invalid key length or type. The key must be a 32-byte Buffer.');
+  if (secretKey.length !== 64) {
+    throw new Error('Invalid key length. The key must be 64 characters (32 bytes).');
   }
   // Generate a random initialization vector
   const iv = randomBytes(16);
