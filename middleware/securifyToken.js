@@ -14,8 +14,8 @@ const algorithm = 'aes-256-ctr';
 function encode(payload, secretKey, options = {}) {
   //check if secretKey is equal 32 bytes
   if (secretKey.length !== 64) {
-    throw new Error('Invalid key length. The key must be 64 characters (32 bytes).');
-  }
+  throw new Error('Invalid key length. The key must be 64 characters (32 bytes).');
+}
   // Generate a random initialization vector
   const iv = randomBytes(16);
 

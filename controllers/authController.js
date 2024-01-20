@@ -2,6 +2,7 @@ const { encode } = require('../middleware/securifyToken');
 const { scrypt,randomBytes, randomFill, createCipheriv }  = require('node:crypto');
 const User = require('../models/user.model');
 const config = require('../config/config');
+require('dotenv').config();
 
 const generateRandomString = async (length) => {
   return new Promise((resolve, reject) => {
@@ -77,7 +78,7 @@ exports.login = async (req, res) => {
     res.status(500).json({
       message: 'Internal Server Error',
       error:error.message,
-      key:secretKey
+      key:process.env.SECRET_KEY
     });
   }
 };
