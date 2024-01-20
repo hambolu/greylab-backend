@@ -1,4 +1,4 @@
-const { scrypt,randomBytes, randomFill, createCipheriv }  = require('node:crypto');
+const { scrypt,randomBytes, randomFill, createDecipheriv, createCipheriv }  = require('node:crypto');
 
 // Define the encryption algorithm
 const algorithm = 'aes-256-ctr';
