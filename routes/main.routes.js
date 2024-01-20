@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
       const authController = require('../controllers/authController');
       const userControllers = require('../controllers/userController');
       const whitelistProjectController = require('../controllers/whitelistProjectsController');
-      const authJwt = require('../middleware/authJwt');
+      const {authenticateToken} = require('../middleware/authJwt');
       
       module.exports = function (app) {
         // Authentication
@@ -25,17 +25,17 @@ app.use(express.urlencoded({ extended: true }));
         app.post('/auth/signup', authController.signup);
       
         // Project Route
-        app.post('/createproject', [authJwt.authenticateToken], whitelistProjectController.project);
-        app.get('/allProject', [authJwt.authenticateToken], whitelistProjectController.allProjects);
+        app.post('/createproject', authenticateToken, whitelistProjectController.project);
+        app.get('/allProject', authenticateToken, whitelistProjectController.allProjects);
       
         // Users route
-        app.post('/update-profile', [authJwt.authenticateToken], userControllers.updateProfile);
-        app.post('/update-profile-image', [authJwt.authenticateToken], userControllers.updateProfileImage);
-        app.get('/get-all-users', [authJwt.authenticateToken], userControllers.allUsers);
+        app.post('/update-profile', authenticateToken, userControllers.updateProfile);
+        app.post('/update-profile-image', authenticateToken, userControllers.updateProfileImage);
+        app.get('/get-all-users', authenticateToken, userControllers.allUsers);
         app.get('/getUserByRoleName/:roleName', userControllers.getOneUser);
-        app.get('/getUser/:Id', [authJwt.authenticateToken], userControllers.getSingleUser);
-        app.delete('/delete-user/:id', [authJwt.authenticateToken], userControllers.delete);
+        app.get('/getUser/:Id', authenticateToken, userControllers.getSingleUser);
+        app.delete('/delete-user/:id', authenticateToken, userControllers.delete);
       
         // Roles
-        app.get('/api/get-roles', [authJwt.authenticateToken], userControllers.allRoles);
+        app.get('/api/get-roles', authenticateToken, userControllers.allRoles);
       };      

@@ -4,6 +4,7 @@ const User = require('../models/user.model');
 const config = require('../config/config');
 require('dotenv').config();
 
+
 const generateRandomString = async (length) => {
   return new Promise((resolve, reject) => {
     crypto.randomBytes(length, (err, buffer) => {
