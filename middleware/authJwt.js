@@ -13,7 +13,7 @@ const authenticateToken = async (req, res, next) => {
 
     // Verify token authenticity
     if (!verify(decoded)) {
-      return res.status(401).json({ message: 'Invalid token' });
+      return res.status(401).json({ message: 'Invalid token', decode });
     }
 
     req.user = decoded;
