@@ -52,7 +52,7 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const secretKey = randomBytes(32);
+  const secretKey = randomBytes(32).toString('hex');
    console.log(secretKey);
   try {
     const user = await User.findOne({
