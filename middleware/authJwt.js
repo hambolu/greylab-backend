@@ -19,7 +19,7 @@ const authenticateToken = async (req, res, next) => {
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ message: 'Invalid token', error:error.message }); // Consistent error message
+    return res.status(500).json({ message: 'Invalid token', error:error.message }); // Consistent error message
   }
 };
 
