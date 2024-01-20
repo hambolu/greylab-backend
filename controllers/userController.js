@@ -8,13 +8,20 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 exports.allUsers = async (req, res) => {
-  const allUsers = await User.find({}).populate({
-    path: "roles",
-    select: "name",
-    model: Role,
-  });
-  return res.json(allUsers);
+  try {
+    const allUsers = await User.find().populate({
+      path: 'roles',
+      select: 'name',
+      model: Role,
+    });
+
+    return res.status(200).json(allUsers);
+  } catch (error) {
+    console.error('Error fetching all users:', error.message);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
+
 
 exports.getOneUser = async (req, res) => {
 
