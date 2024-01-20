@@ -20,7 +20,7 @@ function encode(payload, secretKey, options = {}) {
   const iv = randomBytes(16);
 
   // Create a cipher using the encryption algorithm and secret key
-  const cipher = createCipheriv(algorithm, secretKey, iv);
+  const cipher = createCipheriv(algorithm, Buffer.from(secretKey, 'hex'), iv);
 
   // Encrypt the payload
   const encryptedPayload = Buffer.concat([cipher.update(JSON.stringify(payload)), cipher.final()]);
@@ -76,7 +76,7 @@ function decode(token, secretKey) {
   const encryptedPayload = Buffer.from(rest.slice(32), 'hex');
 
   // Create a decipher using the encryption algorithm and secret key
-  const decipher = createDecipheriv(algorithm, secretKey, iv);
+  const decipher = createDecipheriv(algorithm, Buffer.from(secretKey, 'hex'), iv);
 
   // Decrypt the payload
   const decryptedPayload = Buffer.concat([decipher.update(encryptedPayload), decipher.final()]);
