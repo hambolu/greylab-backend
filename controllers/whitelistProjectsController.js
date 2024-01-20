@@ -1,6 +1,6 @@
 const db = require("../models");
-const User = db.user;
-const Project = db.project;
+const User = db.User;
+const Project = db.Project;
 
 exports.project = async (req, res, next) => {
   try {
