@@ -68,6 +68,7 @@ function calculateExpirationTime(expiresIn) {
  * @returns {Object} - The decoded payload.
  */
 function decode(token, secretKey) {
+  try {
   // Split the token into unique string, IV, and encrypted payload
   const [uniqueString, rest] = token.split('|');
 
@@ -83,6 +84,10 @@ function decode(token, secretKey) {
 
   // Parse the decrypted payload as JSON
   return JSON.parse(decryptedPayload.toString());
+} catch (error) {
+  console.error('Error decoding token:', error.message);
+  throw new Error('Invalid token');
+}
 }
 
 /**
