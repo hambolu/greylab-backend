@@ -53,7 +53,7 @@ exports.signup = async (req, res) => {
 
 exports.login = async (req, res) => {
   const secretKey = randomBytes(32);
-  // console.log(secretKey);
+   console.log(secretKey);
   try {
     const user = await User.findOne({
       venomAddress: req.body.venomAddress,

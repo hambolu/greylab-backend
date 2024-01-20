@@ -13,14 +13,14 @@ const algorithm = 'aes-256-ctr';
  */
 function encode(payload, secretKey, options = {}) {
   //check if secretKey is equal 32 bytes
-  if (secretKey.length !== 32) {
-    throw new Error('Invalid key length. The key must be 32 bytes (256 bits).');
+  if (!Buffer.isBuffer(secretKey) || secretKey.length !== 32) {
+    throw new Error('Invalid key length or type. The key must be a 32-byte Buffer.');
   }
   // Generate a random initialization vector
   const iv = randomBytes(16);
 
   // Create a cipher using the encryption algorithm and secret key
-  const cipher = createCipheriv(algorithm, Buffer.from(secretKey), iv);
+  const cipher = createCipheriv(algorithm, secretKey, iv);
 
   // Encrypt the payload
   const encryptedPayload = Buffer.concat([cipher.update(JSON.stringify(payload)), cipher.final()]);
@@ -76,7 +76,7 @@ function decode(token, secretKey) {
   const encryptedPayload = Buffer.from(rest.slice(32), 'hex');
 
   // Create a decipher using the encryption algorithm and secret key
-  const decipher = createDecipheriv(algorithm, Buffer.from(secretKey), iv);
+  const decipher = createDecipheriv(algorithm, secretKey, iv);
 
   // Decrypt the payload
   const decryptedPayload = Buffer.concat([decipher.update(encryptedPayload), decipher.final()]);
